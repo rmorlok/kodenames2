@@ -19,3 +19,8 @@
 
 # Go workspace file
 go.work
+
+# Don't persist secrets that can be in the .env file
+.env
+
+.idea
