@@ -31,7 +31,8 @@ func GetGinServer() *gin.Engine {
 	router.Use(static.Serve("/", static.LocalFile("./client/build", true)))
 
 	// setup auth routes
-	router.GET("/auth", authService.AuthHandler())
+	router.GET("/login", authService.LoginHandler())
+	router.GET("/auth/*auth", authService.AuthHandler())
 	router.GET("/avatar", authService.Optional(), authService.AvatarHandler())
 
 	api := router.Group("/api", authService.Required())

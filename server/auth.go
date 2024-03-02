@@ -3,6 +3,7 @@ package server
 // Based on https://github.com/katomaso/gin-auth/blob/v0.1.0/lib.go
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-pkgz/auth"
 	"github.com/go-pkgz/auth/avatar"
@@ -44,6 +45,14 @@ func (s *Service) Optional() gin.HandlerFunc {
 		})
 		m := s.Middleware()
 		m.Trace(_next).ServeHTTP(c.Writer, c.Request)
+	}
+}
+
+func (s *Service) LoginHandler() gin.HandlerFunc {
+	env := GetEnvironmentVariables()
+
+	return func(c *gin.Context) {
+		c.Redirect(http.StatusFound, fmt.Sprintf("/auth/google/login?site=%s&from=%s", env.AuthUrl, env.AuthUrl))
 	}
 }
 
