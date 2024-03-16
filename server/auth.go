@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-pkgz/auth"
 	"github.com/go-pkgz/auth/avatar"
+	"github.com/go-pkgz/auth/logger"
 	"github.com/go-pkgz/auth/token"
 	"net/http"
 	"strings"
@@ -82,6 +83,7 @@ func GetAuthService() *Service {
 		CookieDuration: time.Hour * 24,  // cookie expires in 1 day and will enforce re-login
 		Issuer:         env.AuthIssuer,
 		URL:            env.AuthUrl,
+		Logger:         logger.Std,
 		AvatarStore:    avatar.NewLocalFS("/tmp"),
 		Validator: token.ValidatorFunc(func(_ string, claims token.Claims) bool {
 			// allow only dev_* names
