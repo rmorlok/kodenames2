@@ -1,8 +1,8 @@
 import * as React from 'react';
-import GameBoard from "./GameBoard";
+import SignIn from "./SignIn";
 
 export default function App() {
   return (
-      <GameBoard />
+      <SignIn />
   );
 }
