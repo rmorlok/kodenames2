@@ -2,6 +2,7 @@ package server
 
 import (
 	ratelimit "github.com/JGLTechnologies/gin-rate-limit"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -16,6 +17,15 @@ func rateErrorHandler(c *gin.Context, info ratelimit.Info) {
 	c.String(429, "Too many requests. Try again in "+time.Until(info.ResetTime).String())
 }
 
+func GetCorsConfig() cors.Config {
+	config := cors.DefaultConfig()
+
+	config.AllowOrigins = GetEnvironmentVariables().CorsAllowedOrigins
+	config.AllowCredentials = true
+
+	return config
+}
+
 func GetGinServer() *gin.Engine {
 	authService := GetAuthService()
 	rlstore := ratelimit.InMemoryStore(&ratelimit.InMemoryOptions{
@@ -26,6 +36,7 @@ func GetGinServer() *gin.Engine {
 	router := gin.Default()
 
 	router.Use(authService.Optional())
+	router.Use(cors.New(GetCorsConfig()))
 
 	// Static content
 	router.Use(static.Serve("/", static.LocalFile("./client/build", true)))
@@ -47,6 +58,7 @@ func GetGinServer() *gin.Engine {
 				"message": "pong",
 			})
 		})
+		api.GET("/me", mw, GetMe)
 		api.GET("/albums", mw, GetAlbums)
 		api.GET("/albums/:id", mw, GetAlbumByID)
 		api.POST("/albums", mw, PostAlbums)

@@ -3,6 +3,7 @@ package server
 import (
 	"github.com/joho/godotenv"
 	"os"
+	"strings"
 	"sync"
 )
 
@@ -12,6 +13,7 @@ type EnvironmentVariables struct {
 	AuthUrl                string
 	AuthGoogleClientId     string
 	AuthGoogleClientSecret string
+	CorsAllowedOrigins     []string
 }
 
 var envOnce sync.Once
@@ -28,6 +30,7 @@ func GetEnvironmentVariables() *EnvironmentVariables {
 			AuthUrl:                os.Getenv("AUTH_URL"),
 			AuthGoogleClientId:     os.Getenv("AUTH_GOOGLE_CLIENT_ID"),
 			AuthGoogleClientSecret: os.Getenv("AUTH_GOOGLE_CLIENT_SECRET"),
+			CorsAllowedOrigins:     strings.Split(os.Getenv("CORS_ALLOWED_ORIGINS"), ","),
 		}
 	})
 

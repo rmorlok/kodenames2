@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/rmorlok/kodenames_backend/server"
+	"github.com/rmorlok/kodenames2/server"
 	"github.com/spf13/cobra"
 )
 

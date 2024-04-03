@@ -10,7 +10,6 @@ import (
 	"github.com/go-pkgz/auth/logger"
 	"github.com/go-pkgz/auth/token"
 	"net/http"
-	"strings"
 	"time"
 )
 
@@ -81,14 +80,11 @@ func GetAuthService() *Service {
 		}),
 		TokenDuration:  time.Minute * 5, // token expires in 5 minutes
 		CookieDuration: time.Hour * 24,  // cookie expires in 1 day and will enforce re-login
+		DisableXSRF:    true,            // Disable for now
 		Issuer:         env.AuthIssuer,
 		URL:            env.AuthUrl,
 		Logger:         logger.Std,
 		AvatarStore:    avatar.NewLocalFS("/tmp"),
-		Validator: token.ValidatorFunc(func(_ string, claims token.Claims) bool {
-			// allow only dev_* names
-			return claims.User != nil && strings.HasPrefix(claims.User.Name, "dev_")
-		}),
 	}
 
 	// create auth service with providers
