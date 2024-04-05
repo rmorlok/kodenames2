@@ -9,13 +9,14 @@ import Typography from '@mui/material/Typography';
 
 import {Copyright} from "./Copyright";
 import {GoogleSignInButton} from "./GoogleSignInButton";
-
-// TODO remove, this demo shouldn't need to reset the theme.
-
+import {AppDispatch, loginWithProvider} from "./store";
+import {useDispatch} from "react-redux";
 
 // Based on https://github.com/mui/material-ui/blob/v5.15.13/docs/data/material/getting-started/templates/sign-in-side/SignInSide.tsx
 
 export default function SignIn() {
+    const dispatch = useDispatch<AppDispatch>();
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -59,7 +60,9 @@ export default function SignIn() {
                         Sign in
                     </Typography>
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-                        <GoogleSignInButton style={{width: '300px'}}/>
+                        <GoogleSignInButton
+                            style={{width: '300px'}}
+                            onClick={() => dispatch(loginWithProvider('google'))} />
                         <Copyright sx={{ mt: 5 }} />
                     </Box>
                 </Box>
