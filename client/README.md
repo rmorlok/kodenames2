@@ -6,5 +6,12 @@ Install it and run:
 nvm use v18.16.0
 yarn
 yarn dev
-open http://localhost:5173/
+open http://127.0.0.1:5173/
+```
+
+View components
+
+```bash
+yarn storybook
+open http://localhost:6006
 ```

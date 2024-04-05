@@ -3,7 +3,7 @@ import LoadingPage from "./LoadingPage";
 import {BrowserRouter, Route, Routes, Outlet, Navigate} from "react-router-dom";
 import SignIn from "./SignIn";
 import GameBoard from "./GameBoard";
-import ListTables from "./ListTables";
+import ChooseTable from "./ChooseTable";
 import {AuthState} from "./AuthState";
 import {useSelector} from "react-redux";
 import {selectAuthStatus} from "./store";
@@ -54,7 +54,7 @@ export function Router() {
 
               { /* Things only authenticated users can see */ }
               <Route element={<ProtectedRoutes />}>
-                  <Route path={'/'} Component={ListTables}/>
+                  <Route path={'/'} Component={ChooseTable}/>
                   <Route path={'/table/:id'} Component={GameBoard}/>
               </Route>
           </Routes>
