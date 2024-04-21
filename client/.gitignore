@@ -48,3 +48,8 @@ dist-ssr
 *.sw?
 
 *storybook.log
+
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+.pnp.*
